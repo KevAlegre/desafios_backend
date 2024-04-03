@@ -59,4 +59,4 @@ const productManager = new ProductManager();
 
 // const products = productManager.getProducts();
 // const products = productManager.getProductById();
-// console.log(products);
+// console.log(products); 
