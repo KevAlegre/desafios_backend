@@ -22,8 +22,14 @@ app.get("/products", async (req, res) => {
 app.get("/products/:pid", async (req, res) => {
     const productId = parseInt(req.params.pid);
     const product = await productManager.getProductById(productId)
-    res.send({product});
-    
+    if (product) {
+        res.send({product});
+    } else {
+        res.send(`
+        <h1>ERROR 404</h1>
+        <p>El producto con el ID ingresado no existe.</p>
+        `);
+    };
 });
 
 app.listen(PORT, () => {

@@ -25,5 +25,68 @@
     "thumbnail": "Sin imagen",
     "code": "asd123",
     "stock": 12
+  },
+  {
+    "id": 4,
+    "title": "Leche",
+    "description": "Descremada",
+    "price": 1200,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 24
+  },
+  {
+    "id": 5,
+    "title": "Huevos",
+    "description": "Blancos",
+    "price": 900,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 6
+  },
+  {
+    "id": 6,
+    "title": "Cereales",
+    "description": "Chocolate",
+    "price": 1600,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 15
+  },
+  {
+    "id": 7,
+    "title": "Papel Higiénico",
+    "description": "30 Metros",
+    "price": 870,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 12
+  },
+  {
+    "id": 8,
+    "title": "Manzana",
+    "description": "Roja",
+    "price": 715,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 20
+  },
+  {
+    "id": 9,
+    "title": "Pan",
+    "description": "Integral",
+    "price": 1500,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 15
+  },
+  {
+    "id": 10,
+    "title": "Queso",
+    "description": "Untable",
+    "price": 860,
+    "thumbnail": "Sin imagen",
+    "code": "asd123",
+    "stock": 10
   }
 ]
