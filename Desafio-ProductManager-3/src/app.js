@@ -1,4 +1,4 @@
-//Desafío 3 - Servidor con Express
+//Desafío 3 - Servidor con Expresss
 
 const ProductManager = require("./ProductManager.js");
 
@@ -9,13 +9,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.get("/products", async (req, res) => {
     const limit = req.query.limit;
-    if(!isNaN(limit)) {
-        const products = await productManager.getProducts();
-        const limitedProducts = products.filter((prod) => prod.id <= limit);
-        return res.send({products: limitedProducts});
-    };
-
-    const products = await productManager.getProducts();
+    const products = await productManager.limitProducts(limit);
     res.send({products});
 });
 
@@ -25,7 +19,7 @@ app.get("/products/:pid", async (req, res) => {
     if (product) {
         res.send({product});
     } else {
-        res.send(`
+        res.send(` 
         <h1>ERROR 404</h1>
         <p>El producto con el ID ingresado no existe.</p>
         `);

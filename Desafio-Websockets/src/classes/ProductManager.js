@@ -1,13 +1,11 @@
-//Desafío 3 - Servidor con Express
-
-const fs = require("fs/promises");
+import fs from "fs/promises";
 
 class ProductManager {
-    constructor() {
-        this.path = "products.json"
+    constructor(filePath) {
+        this.path = filePath;
     };
 
-    async addProduct(title, description, price, thumbnail, code, stock) {
+    async addProduct({title, description, code, price, status, stock, category, thumbnail}) {
         try {
             const products = await this.readProducts();
             const id = products.length + 1;
@@ -18,15 +16,18 @@ class ProductManager {
                 return;
             };
 
-            if(title && description && price && thumbnail && stock) {
+            if(title && description && price && category && stock) {
                 const product = {
                     id: id,
                     title,
                     description,
-                    price,
-                    thumbnail,
                     code,
-                    stock
+                    price,
+                    code,
+                    status,
+                    stock,
+                    category,
+                    thumbnail
                 };
                 products.push(product);
                 await fs.writeFile(this.path, JSON.stringify(products, null, 2));
@@ -50,6 +51,7 @@ class ProductManager {
         try {
             const products = await this.readProducts();
             const filteredProduct = products.find((product) => product.id === productId);
+            console.log(filteredProduct);
 
             if(filteredProduct) {
                 return filteredProduct;
@@ -134,6 +136,7 @@ class ProductManager {
             return JSON.parse(data);
         } catch (error) {
             if (error.code === "ENOENT") {
+                console.log("No existe el archivo");
                 return [];
             } else {
                 throw error
@@ -156,4 +159,5 @@ class ProductManager {
     }
 };
 
-module.exports = ProductManager;
+
+export default ProductManager;
