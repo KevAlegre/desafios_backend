@@ -109,5 +109,15 @@
     "stock": 8,
     "category": "Bebidas",
     "thumbnail": []
+  },
+  {
+    "id": 12,
+    "title": "Lapicera",
+    "description": "Trazo grueso",
+    "code": "3H57zE",
+    "price": 670,
+    "status": true,
+    "stock": 24,
+    "category": "Librería"
   }
 ]

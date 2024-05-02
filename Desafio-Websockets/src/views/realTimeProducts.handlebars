@@ -14,12 +14,13 @@
         <input type="text" id="price" placeholder="Precio en AR$" required>        
         <label for="stock">Stock del producto</label>
         <input type="text" id="stock" placeholder="Stock a ingresar" required>
-        <button id="btn" onclick="sendData()">Añadir producto</button>
+        <button onclick="sendDataCreate()">Añadir producto</button>
     </section>
-        <section>
+    <section>
         <h2>Eliminar productos</h2>
-
-        
+        <label for="delete-id">Ingrese el ID del producto a eliminar</label>
+        <input type="text" id="delete-id" required>
+        <button onclick="sendDataDelete()">Eliminar producto</button>
     </section>
 </div>
 

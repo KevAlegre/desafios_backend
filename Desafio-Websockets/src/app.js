@@ -2,6 +2,7 @@
 
 import express from "express";
 import handlebars from "express-handlebars"
+import socketProducts from "./server/socketProducts.js";
 import { Server } from "socket.io";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
@@ -27,13 +28,6 @@ app.use("/", viewsRouter);
 const httpServer = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
 const socketServer = new Server(httpServer);
 
-socketServer.on("connection", (socket) => {
-    console.log("Cliente conectado");
-    socket.on("newProduct", () => {
-        const message = "Producto recibido con éxito"
-        socket.emit("message", message);
-    });
-});
+socketProducts(socketServer);

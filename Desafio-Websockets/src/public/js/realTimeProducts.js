@@ -1,16 +1,21 @@
 const socket = io();
 
-function sendData() {
+function sendDataCreate() {
     const data = {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
-        category: document.getElementById("category").value,
         code: document.getElementById("code").value,
         price: document.getElementById("price").value,
-        stock: document.getElementById("stock").value
+        status: true,
+        stock: document.getElementById("stock").value,
+        category: document.getElementById("category").value
     }
 
     socket.emit("newProduct", data);
 };
 
-socket.on("message",);
+function sendDataDelete() {
+    const data = document.getElementById("delete-id").value;
+
+    socket.emit("deleteProduct", data);
+}
