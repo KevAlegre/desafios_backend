@@ -1,6 +1,7 @@
 import { Router } from "express";
 import productModel from "../dao/models/products.model.js";
 import cartModel from "../dao/models/carts.model.js";
+import { isAuth, isNotAuth } from "../middleware/auth.js";
 
 const viewsRouter = Router();
 
@@ -21,7 +22,15 @@ viewsRouter.get("/chat", (req, res) => {
     res.render("chat", {})
 });
 
-viewsRouter.get("/products", async (req, res) => {
+viewsRouter.get("/login", isNotAuth, (req, res) => {
+    res.render("login");
+});
+
+viewsRouter.get("/register", isNotAuth, (req, res) => {
+    res.render("register");
+});
+
+viewsRouter.get("/products", isAuth, async (req, res) => {
    try {
         const page = req.query.page;
         const options = {
@@ -36,7 +45,7 @@ viewsRouter.get("/products", async (req, res) => {
         
         const nextLink = hasNextPage ? `http://localhost:8080/products?page=${nextPage}` : null;
         
-        res.render("products", {products, prevLink, nextLink, page});
+        res.render("products", {products, prevLink, nextLink, page, user: req.session.user});
     } catch (error) {
         console.log(error);
     }
@@ -52,4 +61,5 @@ viewsRouter.get("/carts/:cid", async (req, res) => {
         res.render({message: "El carrito con el ID ingresado no existe"});
     };
 });
+
 export default viewsRouter;

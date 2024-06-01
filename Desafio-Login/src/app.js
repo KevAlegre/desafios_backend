@@ -5,11 +5,14 @@ import handlebars from "express-handlebars"
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import socketManager from "./server/socketManager.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js";
 import __dirname from "./utils.js";
+import sessionRouter from "./routes/sessions.router.js";
 
 const app = express();
 const PORT = 8080;
@@ -20,21 +23,21 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 
-const environment = () => {
-    mongoose.connect(process.env.MONGO_URL)
-        .then(() => console.log("Conectado a la base de datos"))
-        .catch((error) => console.log("Error al conectar a la base de datos", error));
-}
-
-environment();
-
 //Handlebars
 app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
+app.use(session({
+    secret: "secretkey",
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({mongoUrl: process.env.MONGO_URL}),
+}));
+
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/sessions", sessionRouter);
 app.use("/", viewsRouter);
 
 const httpServer = app.listen(PORT, () => {
