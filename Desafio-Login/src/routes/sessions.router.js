@@ -5,12 +5,22 @@ const sessionRouter = Router();
 
 sessionRouter.post("/register", async (req, res) => {
     const {first_name, last_name, email, age, password} = req.body;
+
+    let role;
+
     try {
-        const newUser = new userModel({first_name, last_name, email, age, password});
+        if (email === "adminCoder@coder.com") {
+            role = "admin"
+            /* adminCod3r123 */
+        } else {
+            role = "user"
+        };
+        
+        const newUser = new userModel({first_name, last_name, email, age, password, role});
         await newUser.save();
         res.redirect("/login");
     } catch (error) {
-        res.send("Error al registrar usuario");
+        res.status(500).send("Error al registrar usuario");
     }
 });
 
@@ -18,8 +28,13 @@ sessionRouter.post("/login", async (req, res) => {
     const {email, password} = req.body;
     try {
         const user = await userModel.findOne({email});
+            
         if(!user) {
-            return res.status("500").send("Usuario no encontrado");
+            return res.status(404).send("Usuario no encontrado");
+        }
+        
+        if (user.password !== password) {
+            return res.status(401).send('Contraseña incorrecta');
         }
 
         req.session.user = {
@@ -27,19 +42,23 @@ sessionRouter.post("/login", async (req, res) => {
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
-            age: user.age
+            age: user.age,
+            role: user.role
         }
-
-        res.redirect("/products");
+        if (req.session.user.role === "admin") {
+            res.redirect("/realtimeproducts?page=1");
+        } else {
+            res.redirect("/products?page=1");
+        }
     } catch (error) {
-        res.send();
+        res.status(500).send("Error al iniciar sesión");
     }
 });
 
 sessionRouter.post("/logout", (req, res) => {
     req.session.destroy((error) => {
         if(error) {
-            return res.send("Error al cerrar sesión");
+            return res.status(500).send("Error al cerrar sesión");
         }
         res.redirect("/login");
     });

@@ -1,10 +1,10 @@
 <div>
     <h1>Crear cuenta</h1>
-    <form action="/api/sessions/login" method="POST">
-        <label for="name">Nombre:</label>
-        <input type="text" name="name" required>
-        <label for="lastname">Apellido:</label>
-        <input type="text" name="lastname" required>
+    <form action="/api/sessions/register" method="POST">
+        <label for="first_name">Nombre:</label>
+        <input type="text" name="first_name" required>
+        <label for="last_name">Apellido:</label>
+        <input type="text" name="last_name" required>
         <label for="email">Email:</label>
         <input type="email" name="email" required>
         <label for="age">Edad:</label>
@@ -13,4 +13,5 @@
         <input type="password" name="password" required>
         <button type="submit">Registrarse</button>    
     </form>
+    <a href="/login">Iniciar sesión</a>
 </div>

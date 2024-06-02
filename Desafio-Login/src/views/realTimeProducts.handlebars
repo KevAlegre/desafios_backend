@@ -1,4 +1,12 @@
 <div>
+    <h2>Bienvenido al panel del administrador!</h2>
+    <p>Email: {{user.email}}</p>
+    <p>Rol: {{user.role}}</p>
+    <div>
+        <form action="/api/sessions/logout" method="POST">
+            <button type="submit">Cerrar sesión</button>
+        </form>
+    </div>
     <h1>RealTimeProducts</h1>
     <section>
         <h2>Añadir productos</h2>
@@ -22,6 +30,29 @@
         <input type="text" id="delete-id" required>
         <button onclick="sendDataDelete()">Eliminar producto</button>
     </section>
+    <section>
+        {{#each products.docs}}
+            <div>
+                <h3>{{this.title}} (code: <span id="code">{{this.code}}</span>)</h3>
+                <h4>Categoría: {{this.category}}</h4>
+
+                <p>{{this.description}}</p>
+                <p>Precio: ${{this.price}}</p>
+            </div>
+            <div>
+                <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+            </div>
+        {{/each}}
+    </section>
+    <div>
+        {{#if prevLink}}
+            <a href="{{prevLink}}">Página anterior</a>
+        {{/if}}
+        {{page}}
+        {{#if nextLink}}
+            <a href="{{nextLink}}">Página siguiente</a>
+        {{/if}}
+    </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
