@@ -38,8 +38,11 @@ export const renderAdminDashboard = async (req, res) => {
 };
 
 export const renderCart = async (req, res) => {
-    const cartId = req.params.cid;
-    const cart = await getCartService(cartId);
-    console.log(cart);
-    res.render("cart", cart);
+    try {
+        const cartId = req.params.cid;
+        const cart = await getCartService(cartId);
+        res.render("cart", {cart: cart});
+    } catch (error) {
+        console.log(error);
+    }
 };

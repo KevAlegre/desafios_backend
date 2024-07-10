@@ -3,7 +3,6 @@
 import express from "express";
 import handlebars from "express-handlebars"
 import { Server } from "socket.io";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import session from "express-session";
