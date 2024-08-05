@@ -1,6 +1,7 @@
 import { getProductsService } from "../services/productsServices.js";
 import { getCartService } from "../services/cartsServices.js";
 import config from "../config/config.js";
+import { generateProducts } from "../utils.js";
 
 export const renderLogin = (req, res) => {
     res.render("login");
@@ -12,12 +13,10 @@ export const renderRegister = (req, res) => {
 
 export const renderUserDashboard = async (req, res) => {
     try {
-        const { user } = req.session;
         const cartId = req.user.cart;
         const {limit, page, sort, query} = req.query;
         const products = await getProductsService(limit, page, sort, query);
         products.cart = cartId;
-        // console.log(products);
         const profileLink = `http://localhost:${config.port}/current`;
         const cartLink = `http://localhost:${config.port}/carts`
         const {prevPage, nextPage, hasPrevPage, hasNextPage} = products;
@@ -63,4 +62,13 @@ export const renderCart = async (req, res) => {
     } catch (error) {
         console.log(error);
     };
+};
+
+export const renderMocks = (req, res) => {
+    try {
+        const products = generateProducts();
+        res.render("home", {products});
+    } catch (error) {
+        console.log(error);
+    }
 };

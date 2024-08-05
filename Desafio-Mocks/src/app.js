@@ -15,6 +15,7 @@ import viewsRouter from "./routes/views.router.js";
 import __dirname from "./utils.js";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
+import errorHandler from "./services/errorHandler.js"
 import config from "./config/config.js";
 
 const app = express();
@@ -44,6 +45,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/", viewsRouter);
+app.use(errorHandler);
 
 const httpServer = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

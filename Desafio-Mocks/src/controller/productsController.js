@@ -28,7 +28,7 @@ export const createProduct = async (req, res) => {
         res.send({status: "Success", payload: newProduct});
     } catch (error) {
         console.log(error);
-        res.send({status: "Error", message: error.message});
+        // res.send({status: "Error", message: error.message});
     };
 };
 

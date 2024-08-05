@@ -1,4 +1,7 @@
 import { ProductsData } from "../DAO/factory.js";
+import CustomError from "./CustomError/customError.js";
+import EErrors from "./CustomError/dictionary.js";
+import { error_invalidProductsParams } from "./CustomError/info.js";
 
 const productsData = new ProductsData();
 
@@ -20,7 +23,18 @@ export const getProductByIdService = async (productId) => {
 };
 
 export const createProductService = async (title, description, price, code, stock, category, thumbnail) => {
-    if(!title, !description, !price, !code, !stock, !category) throw new Error("Incomplete fields");
+    console.log(title);
+    console.log(price);
+    
+    
+    if(!title || !description || !price || !code || !stock || !category) {
+        CustomError.createError({
+            name: "Product creation error",
+            cause: error_invalidProductsParams(title, description, price, code, stock, category, thumbnail),
+            message: "Error trying to create a product",
+            code: EErrors.INVALID_PRODUCTS_PARAMS
+        });
+    };
     const verifyCode = await productsData.existCode(code);
     if(verifyCode) throw new Error("Assigned code already exists");
     const newProduct = {
